@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'List Reports'
+method: GET
+url: '{{baseUrl}}/api/reports'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

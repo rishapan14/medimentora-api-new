@@ -1,0 +1,660 @@
+openapi: 3.0.3
+info:
+  title: MediMentora AI X-Ray Analysis API
+  version: "1.0.0"
+  description: |
+    Educational AI X-Ray Analysis endpoints (Phases 1–17).
+
+    **Medical safety:** For educational purposes only. This is not a diagnosis.
+    Please consult a qualified healthcare professional.
+
+    This AI analysis is intended for educational and decision-support purposes only.
+    Findings are possible observations only and are not definitive diagnoses. Patient
+    clinical information is supporting context only.
+
+    **Model evaluation metrics** (admin) are educational ops/monitoring
+    proxies only — not clinical accuracy, precision, recall, or diagnostic
+    performance.
+  contact:
+    name: MediMentora
+servers:
+  - url: http://localhost:5000
+    description: Local development
+tags:
+  - name: X-Ray Student
+    description: Student/learner X-ray upload, analysis, comparison, heatmap, explain, recommendations
+  - name: X-Ray Reference Library
+    description: Educational healthy reference images
+  - name: X-Ray Admin Reference
+    description: Admin reference library manager (JWT + admin role)
+  - name: X-Ray Admin Monitor
+    description: Admin monitoring and educational model evaluation (JWT + admin role)
+paths:
+  /api/xray/upload:
+    post:
+      tags: [X-Ray Student]
+      summary: Upload X-ray image(s)
+      description: Multipart upload with optional patient clinical context. Returns educational disclaimer.
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [files]
+              properties:
+                files:
+                  type: string
+                  format: binary
+                  description: One or more image/DICOM files
+                body_part:
+                  type: string
+                  example: Chest
+                patient_age:
+                  type: string
+                gender:
+                  type: string
+                projection:
+                  type: string
+                  example: PA
+                symptoms:
+                  type: string
+                reason_for_exam:
+                  type: string
+                smoking_history:
+                  type: string
+      responses:
+        "200":
+          description: Upload accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /api/xray/history:
+    get:
+      tags: [X-Ray Student]
+      summary: List own X-ray history
+      description: Paginated history with optional date filters and heatmap flag.
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - name: date_from
+          in: query
+          schema: { type: string, format: date }
+        - name: date_to
+          in: query
+          schema: { type: string, format: date }
+        - name: body_part
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: History page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /api/xray/dashboard:
+    get:
+      tags: [X-Ray Student]
+      summary: X-ray dashboard summary
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/xray/clinical-options:
+    get:
+      tags: [X-Ray Student]
+      summary: Patient clinical form enums
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Option lists for clinical form fields
+
+  /api/xray/analyze:
+    post:
+      tags: [X-Ray Student]
+      summary: Run vision analysis on uploaded X-ray(s)
+      description: |
+        Educational structured findings only — never a clinical diagnosis.
+        Supports model routing / ensemble when configured.
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                xray_ids:
+                  type: array
+                  items: { type: integer }
+                xray_id:
+                  type: integer
+      responses:
+        "200":
+          description: Analysis completed or queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/xray/{xray_id}:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Student]
+      summary: Get X-ray analysis detail
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Analysis payload with disclaimer
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [X-Ray Student]
+      summary: Delete own X-ray analysis
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/xray/{xray_id}/file:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Student]
+      summary: Download original image
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Image bytes
+          content:
+            image/*:
+              schema: { type: string, format: binary }
+
+  /api/xray/{xray_id}/export:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Student]
+      summary: Export educational report (TXT/JSON)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: format
+          in: query
+          schema: { type: string, enum: [txt, json], default: txt }
+      responses:
+        "200":
+          description: Export file
+
+  /api/xray/{xray_id}/preprocess:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    post:
+      tags: [X-Ray Student]
+      summary: Preprocess radiograph (educational pipeline)
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Preprocessing result
+
+  /api/xray/{xray_id}/preprocessed:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Student]
+      summary: Download preprocessed image
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Preprocessed image bytes
+
+  /api/xray/{xray_id}/reanalyze:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    post:
+      tags: [X-Ray Student]
+      summary: Re-run vision analysis
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Reanalysis result
+
+  /api/xray/{xray_id}/explain:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    post:
+      tags: [X-Ray Student]
+      summary: Generate LLM educational explanation
+      description: |
+        Explains structured findings only (never raw images). Educational wording;
+        not a diagnosis. May regenerate with provider fallback.
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Explanation text + provider metadata
+
+  /api/xray/{xray_id}/heatmap:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    post:
+      tags: [X-Ray Student]
+      summary: Generate educational attention heatmap (Grad-CAM / proxy)
+      description: Educational region attention only — not lesion localization proof.
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Heatmap metadata
+    get:
+      tags: [X-Ray Student]
+      summary: Download heatmap overlay image
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Heatmap image bytes
+
+  /api/xray/{xray_id}/compare:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Student]
+      summary: Get healthy-reference comparison payload
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Comparison data (side-by-side / overlay / difference)
+    post:
+      tags: [X-Ray Student]
+      summary: Generate or refresh healthy-reference comparison
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Comparison generated
+
+  /api/xray/{xray_id}/reference:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Student]
+      summary: Download selected healthy reference for this X-ray
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Reference image bytes
+
+  /api/xray/{xray_id}/recommendations:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Student]
+      summary: Learning recommendations for findings
+      description: Educational course/lesson links only.
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Recommendation list
+    post:
+      tags: [X-Ray Student]
+      summary: Refresh learning recommendations
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Refreshed recommendations
+
+  /api/xray/references/options:
+    get:
+      tags: [X-Ray Reference Library]
+      summary: Reference library filter options
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Body part / projection options
+
+  /api/xray/references/select:
+    get:
+      tags: [X-Ray Reference Library]
+      summary: Auto-select best healthy reference
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: body_part
+          in: query
+          schema: { type: string }
+        - name: projection
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: Selected reference metadata
+
+  /api/xray/references:
+    get:
+      tags: [X-Ray Reference Library]
+      summary: List healthy reference images
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Reference catalog page
+
+  /api/xray/references/{reference_id}/file:
+    get:
+      tags: [X-Ray Reference Library]
+      summary: Download reference image file
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: reference_id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Image bytes
+
+  /api/xray/admin/references:
+    get:
+      tags: [X-Ray Admin Reference]
+      summary: Admin list reference library
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Admin catalog
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    post:
+      tags: [X-Ray Admin Reference]
+      summary: Admin upload reference image
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Created
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /api/xray/admin/references/options:
+    get:
+      tags: [X-Ray Admin Reference]
+      summary: Admin reference form options
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Options
+
+  /api/xray/admin/references/stats:
+    get:
+      tags: [X-Ray Admin Reference]
+      summary: Reference library stats
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Stats
+
+  /api/xray/admin/references/sync:
+    post:
+      tags: [X-Ray Admin Reference]
+      summary: Sync disk catalog into DB
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Sync result
+
+  /api/xray/admin/references/bulk:
+    post:
+      tags: [X-Ray Admin Reference]
+      summary: Bulk upload reference images
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Bulk result
+
+  /api/xray/admin/references/bulk-zip:
+    post:
+      tags: [X-Ray Admin Reference]
+      summary: Bulk upload reference ZIP
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Bulk ZIP result
+
+  /api/xray/admin/references/{ref_id}:
+    parameters:
+      - name: ref_id
+        in: path
+        required: true
+        schema: { type: integer }
+    get:
+      tags: [X-Ray Admin Reference]
+      summary: Get reference detail
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Detail
+    patch:
+      tags: [X-Ray Admin Reference]
+      summary: Update reference metadata
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Updated
+    put:
+      tags: [X-Ray Admin Reference]
+      summary: Replace reference metadata
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Updated
+    delete:
+      tags: [X-Ray Admin Reference]
+      summary: Delete reference
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Deleted
+
+  /api/xray/admin/references/{ref_id}/file:
+    get:
+      tags: [X-Ray Admin Reference]
+      summary: Admin preview reference file
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: ref_id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Image bytes
+
+  /api/xray/admin/references/{ref_id}/deactivate:
+    post:
+      tags: [X-Ray Admin Reference]
+      summary: Deactivate reference
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: ref_id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Deactivated
+
+  /api/xray/admin/references/{ref_id}/reactivate:
+    post:
+      tags: [X-Ray Admin Reference]
+      summary: Reactivate reference
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: ref_id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Reactivated
+
+  /api/admin/xray-analyses:
+    get:
+      tags: [X-Ray Admin Monitor]
+      summary: List all X-ray analyses (monitor)
+      description: Filters include body_part, status, has_heatmap, date range.
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - name: body_part
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string }
+        - name: has_heatmap
+          in: query
+          schema: { type: boolean }
+        - name: date_from
+          in: query
+          schema: { type: string, format: date }
+        - name: date_to
+          in: query
+          schema: { type: string, format: date }
+      responses:
+        "200":
+          description: Admin list
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /api/admin/xray-analyses/evaluation-metrics:
+    get:
+      tags: [X-Ray Admin Monitor]
+      summary: Educational model evaluation metrics
+      description: |
+        Ops/monitoring proxies only (provenance, confidence bins, finding rates,
+        detection agreement). **Not** clinical accuracy, precision, recall, or
+        diagnostic performance. Gold-standard labels required for clinical claims.
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: body_part
+          in: query
+          schema: { type: string }
+        - name: date_from
+          in: query
+          schema: { type: string, format: date }
+        - name: date_to
+          in: query
+          schema: { type: string, format: date }
+      responses:
+        "200":
+          description: Evaluation report with explicit safety flags
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: success }
+                  data:
+                    type: object
+                    properties:
+                      safety:
+                        type: object
+                        properties:
+                          educational_monitoring_only: { type: boolean, example: true }
+                          not_clinical_performance: { type: boolean, example: true }
+                          not_accuracy_precision_recall: { type: boolean, example: true }
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /api/admin/xray-analyses/{xray_id}:
+    parameters:
+      - $ref: "#/components/parameters/xrayId"
+    get:
+      tags: [X-Ray Admin Monitor]
+      summary: Admin X-ray analysis detail
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Rich detail including provenance / heatmap meta
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [X-Ray Admin Monitor]
+      summary: Admin delete X-ray analysis
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Deleted
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Obtain via `POST /api/auth/login`. Send as `Authorization: Bearer <access_token>`.
+        Admin endpoints require `role=admin`.
+  parameters:
+    xrayId:
+      name: xray_id
+      in: path
+      required: true
+      schema: { type: integer }
+    page:
+      name: page
+      in: query
+      schema: { type: integer, minimum: 1, default: 1 }
+    perPage:
+      name: per_page
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+  responses:
+    Unauthorized:
+      description: Missing or invalid JWT
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    Forbidden:
+      description: Authenticated but not admin (or account deactivated)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    NotFound:
+      description: Resource not found or not owned
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+  schemas:
+    ApiSuccess:
+      type: object
+      properties:
+        status: { type: string, example: success }
+        message: { type: string }
+        data: { type: object }
+    ApiError:
+      type: object
+      properties:
+        status: { type: string, example: error }
+        message: { type: string }

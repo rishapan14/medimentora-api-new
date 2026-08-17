@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Favorite Case'
+method: POST
+url: '{{baseUrl}}/api/clinical-cases/{{caseId}}/favorite'
+order: 7000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

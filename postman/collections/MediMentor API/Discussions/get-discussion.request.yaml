@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Get Discussion'
+method: GET
+url: '{{baseUrl}}/api/discussions/{{discussionId}}'
+order: 2000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

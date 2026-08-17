@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Delete Report'
+method: DELETE
+url: '{{baseUrl}}/api/reports/{{reportId}}'
+order: 8000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

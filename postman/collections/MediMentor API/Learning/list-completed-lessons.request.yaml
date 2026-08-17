@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'List Completed Lessons'
+method: GET
+url: '{{baseUrl}}/api/learning/completed-lessons'
+order: 11000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

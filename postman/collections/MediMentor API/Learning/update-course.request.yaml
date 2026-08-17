@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'Update Course'
+method: PUT
+url: '{{baseUrl}}/api/learning/courses/{{courseId}}'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Fundamentals of Clinical Nursing (Updated)",
+      "difficulty": "medium",
+      "is_published": true
+    }

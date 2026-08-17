@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Get Certificate'
+method: GET
+url: '{{baseUrl}}/api/certificates/{{certificateId}}'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

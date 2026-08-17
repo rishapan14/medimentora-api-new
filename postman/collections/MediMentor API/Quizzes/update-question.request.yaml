@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'Update Question'
+method: PUT
+url: '{{baseUrl}}/api/quizzes/questions/{{questionId}}'
+order: 7000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "explanation": "The normal resting heart rate for a healthy adult is between 60 and 100 bpm.",
+      "points": 2
+    }

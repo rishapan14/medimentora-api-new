@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Mark Lesson Complete'
+method: POST
+url: '{{baseUrl}}/api/learning/lessons/{{lessonId}}/complete'
+order: 10000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

@@ -1,0 +1,15 @@
+$kind: http-request
+name: 'List Notifications'
+method: GET
+url: '{{baseUrl}}/api/notifications'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+queryParams:
+  - key: unread_only
+    value: 'true'
+    description: 'Return only unread notifications (optional)'
+    disabled: true

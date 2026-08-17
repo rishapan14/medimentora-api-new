@@ -1,0 +1,4 @@
+$kind: collection
+name: Simulations
+description: 'Simulation scenario endpoints — /api/simulations. List, retrieve, create, update, delete scenarios, submit attempts, and view attempt history. Create/update/delete require admin or doctor role. All endpoints require Bearer {{accessToken}}.'
+order: 6000

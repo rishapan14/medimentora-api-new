@@ -1,0 +1,27 @@
+$kind: http-request
+name: 'Create Clinical Case'
+method: POST
+url: '{{baseUrl}}/api/clinical-cases'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Chest Pain in a 55-year-old Male",
+      "disease": "Acute Coronary Syndrome",
+      "symptoms": ["Chest pain", "Shortness of breath", "Diaphoresis"],
+      "diagnosis": "STEMI suspected based on ECG changes",
+      "treatment": "Aspirin, nitroglycerin, urgent cardiology referral",
+      "difficulty": "medium",
+      "speciality": "Cardiology",
+      "description": "Patient presents with crushing chest pain radiating to left arm.",
+      "is_published": true
+    }

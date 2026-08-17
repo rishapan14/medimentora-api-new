@@ -1,0 +1,4 @@
+$kind: collection
+name: 'Clinical Cases'
+description: 'Clinical case endpoints — /api/clinical-cases. List, search, filter, create, update, delete cases, and manage favorites. Create/update/delete require admin or doctor role. All endpoints require Bearer {{accessToken}}.'
+order: 5000

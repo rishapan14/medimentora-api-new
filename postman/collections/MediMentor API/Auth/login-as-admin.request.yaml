@@ -1,0 +1,15 @@
+$kind: http-request
+name: 'Login as Admin'
+method: POST
+url: '{{baseUrl}}/api/auth/login'
+order: 2600
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{adminEmail}}",
+      "password": "{{adminPassword}}"
+    }

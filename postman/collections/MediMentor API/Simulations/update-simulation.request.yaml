@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'Update Simulation'
+method: PUT
+url: '{{baseUrl}}/api/simulations/{{simulationId}}'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "difficulty": "hard",
+      "is_active": true
+    }

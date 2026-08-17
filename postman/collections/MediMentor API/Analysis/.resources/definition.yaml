@@ -1,0 +1,4 @@
+$kind: collection
+name: 'AI Analysis'
+description: 'AI-powered report analysis endpoints — /api/analysis. Analyze report text via OpenAI, list analysis history, retrieve or delete a specific analysis. All endpoints require Bearer {{accessToken}}.'
+order: 3000

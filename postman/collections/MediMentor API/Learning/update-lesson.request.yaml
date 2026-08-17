@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'Update Lesson'
+method: PUT
+url: '{{baseUrl}}/api/learning/lessons/{{lessonId}}'
+order: 8000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Vital Signs Assessment (Revised)",
+      "content": "Updated content: Learn to measure BP, pulse, respiration, temperature, and SpO2.",
+      "duration_minutes": 25
+    }

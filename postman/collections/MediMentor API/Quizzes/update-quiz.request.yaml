@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'Update Quiz'
+method: PUT
+url: '{{baseUrl}}/api/quizzes/{{quizId}}'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Nursing Fundamentals Quiz (Revised)",
+      "time_limit_minutes": 45,
+      "is_published": true
+    }

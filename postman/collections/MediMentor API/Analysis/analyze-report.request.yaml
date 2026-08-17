@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'Analyze Report'
+method: POST
+url: '{{baseUrl}}/api/analysis'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "report_text": "Hemoglobin: 10.2 g/dL (low). WBC: 12,000 cells/mcL (elevated). Platelets: 250,000/mcL (normal). RBC: 3.8 million/mcL (low). MCV: 72 fL (low). Ferritin: 8 ng/mL (low)."
+    }

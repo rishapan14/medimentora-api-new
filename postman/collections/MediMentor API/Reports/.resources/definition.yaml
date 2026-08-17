@@ -1,0 +1,4 @@
+$kind: collection
+name: Reports
+description: 'Report management endpoints — /api/reports. Upload PDF/image reports, save report metadata, list, retrieve, extract text (OCR/PDF), and delete reports. All endpoints require Bearer {{accessToken}}.'
+order: 2000

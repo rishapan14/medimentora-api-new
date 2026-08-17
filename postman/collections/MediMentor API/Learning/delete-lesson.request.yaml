@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Delete Lesson'
+method: DELETE
+url: '{{baseUrl}}/api/learning/lessons/{{lessonId}}'
+order: 9000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

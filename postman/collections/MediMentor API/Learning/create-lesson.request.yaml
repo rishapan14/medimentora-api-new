@@ -1,0 +1,24 @@
+$kind: http-request
+name: 'Create Lesson'
+method: POST
+url: '{{baseUrl}}/api/learning/lessons'
+order: 7000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "course_id": {{courseId}},
+      "title": "ECG Interpretation Basics",
+      "content": "Learn to read and interpret electrocardiogram results for common cardiac conditions.",
+      "order_index": 4,
+      "duration_minutes": 30,
+      "topic_tags": ["ECG", "Cardiology", "Diagnostics"]
+    }

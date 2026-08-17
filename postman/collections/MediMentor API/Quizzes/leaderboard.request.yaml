@@ -1,0 +1,19 @@
+$kind: http-request
+name: Leaderboard
+method: GET
+url: '{{baseUrl}}/api/quizzes/leaderboard'
+order: 11000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+queryParams:
+  - key: quiz_id
+    value: '{{quizId}}'
+    description: 'Filter leaderboard by quiz ID (optional)'
+    disabled: true
+  - key: limit
+    value: '10'
+    description: 'Number of top results to return (default 10)'
+    disabled: true

@@ -1,0 +1,23 @@
+$kind: http-request
+name: 'Create Notification (Admin)'
+method: POST
+url: '{{baseUrl}}/api/notifications'
+order: 7000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "notification_type": "certificate_notification",
+      "title": "Certificate Issued",
+      "message": "Congratulations! Your certificate for Fundamentals of Clinical Nursing has been issued.",
+      "user_id": 4,
+      "reference_id": 1
+    }

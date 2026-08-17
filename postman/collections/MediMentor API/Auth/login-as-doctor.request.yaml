@@ -1,0 +1,15 @@
+$kind: http-request
+name: 'Login as Doctor'
+method: POST
+url: '{{baseUrl}}/api/auth/login'
+order: 2500
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{doctorEmail}}",
+      "password": "{{doctorPassword}}"
+    }

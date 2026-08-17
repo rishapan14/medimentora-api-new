@@ -1,0 +1,10 @@
+$kind: http-request
+name: Achievements
+method: GET
+url: '{{baseUrl}}/api/progress/achievements'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

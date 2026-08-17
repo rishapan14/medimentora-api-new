@@ -1,0 +1,4 @@
+$kind: collection
+name: Progress
+description: 'Progress tracking endpoints — /api/progress. Retrieve learning progress, dashboard analytics, and achievements. All endpoints require Bearer {{accessToken}}.'
+order: 8000

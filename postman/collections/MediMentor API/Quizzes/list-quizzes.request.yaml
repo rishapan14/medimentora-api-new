@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'List Quizzes'
+method: GET
+url: '{{baseUrl}}/api/quizzes'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+queryParams:
+  - key: speciality
+    value: Nursing
+    description: 'Filter by speciality (optional)'
+    disabled: true
+  - key: difficulty
+    value: easy
+    description: 'Filter by difficulty: easy, medium, hard (optional)'
+    disabled: true

@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'Create Learning Reminder'
+method: POST
+url: '{{baseUrl}}/api/notifications/learning-reminder'
+order: 5000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "course_title": "Fundamentals of Clinical Nursing"
+    }

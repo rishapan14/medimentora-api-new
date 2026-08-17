@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'Update Clinical Case'
+method: PUT
+url: '{{baseUrl}}/api/clinical-cases/{{caseId}}'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "treatment": "Aspirin 325mg, nitroglycerin SL, oxygen therapy, urgent PCI referral",
+      "difficulty": "hard"
+    }

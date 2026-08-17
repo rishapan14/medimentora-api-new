@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'Generate Certificate'
+method: POST
+url: '{{baseUrl}}/api/certificates/generate'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "course_id": {{courseId}}
+    }

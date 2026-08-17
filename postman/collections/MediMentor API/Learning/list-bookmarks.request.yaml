@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'List Bookmarks'
+method: GET
+url: '{{baseUrl}}/api/learning/bookmarks'
+order: 12000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

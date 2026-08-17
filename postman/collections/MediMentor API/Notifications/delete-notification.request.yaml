@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Delete Notification'
+method: DELETE
+url: '{{baseUrl}}/api/notifications/{{notificationId}}'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

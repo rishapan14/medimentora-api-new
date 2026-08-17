@@ -1,0 +1,4 @@
+$kind: collection
+name: Discussions
+description: 'Discussion forum endpoints — /api/discussions. List, create, update, delete discussions; add/delete comments (with reply support via parent_id); like discussions and comments. All endpoints require Bearer {{accessToken}}.'
+order: 10000

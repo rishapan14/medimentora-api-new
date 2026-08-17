@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'Upload Image Report'
+method: POST
+url: '{{baseUrl}}/api/reports/upload/image'
+order: 2000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+body:
+  type: formdata
+  content:
+    - key: file
+      type: file
+      src: '/path/to/report.png'
+      description: 'Image report file — png, jpg, jpeg, gif, bmp, tiff, webp (required)'
+    - key: title
+      type: text
+      value: 'X-Ray Chest Report'
+      description: 'Report title (optional, defaults to Medical Report Image)'

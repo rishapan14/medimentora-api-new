@@ -1,0 +1,60 @@
+{
+  "version": "2.0.0",
+  "product": "MediMentora",
+  "module": "educational_healthy_xray_comparison",
+  "disclaimer": "This AI analysis is intended for educational and decision-support purposes only. It is not a diagnosis and should not replace evaluation by a qualified radiologist or physician. Findings are possible observations only and are not definitive diagnoses. Patient clinical information is supporting context only.",
+  "organization": [
+    "body_part",
+    "projection",
+    "age_group",
+    "gender"
+  ],
+  "projections": [
+    "PA",
+    "AP",
+    "Lateral",
+    "Oblique",
+    "Other"
+  ],
+  "age_groups": [
+    "Child",
+    "Adult"
+  ],
+  "genders": [
+    "Male",
+    "Female",
+    "Unisex"
+  ],
+  "body_parts": [
+    "Chest",
+    "Hand",
+    "Wrist",
+    "Elbow",
+    "Shoulder",
+    "Spine",
+    "Pelvis",
+    "Hip",
+    "Leg",
+    "Knee",
+    "Foot",
+    "Ankle",
+    "Dental",
+    "Other"
+  ],
+  "gender_relevant_body_parts": [
+    "Chest",
+    "Pelvis",
+    "Hip",
+    "Spine"
+  ],
+  "image_extensions": [
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".webp",
+    ".tif",
+    ".tiff"
+  ],
+  "references": [],
+  "instructions": "Add real healthy radiographs under body_part/projection/age_group/gender/, then call rebuild_catalog_from_disk() or restart with an empty catalog to auto-sync. Do not use drawings or icons."
+}

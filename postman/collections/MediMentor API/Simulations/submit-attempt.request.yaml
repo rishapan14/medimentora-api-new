@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'Submit Simulation Attempt'
+method: POST
+url: '{{baseUrl}}/api/simulations/{{simulationId}}/submit'
+order: 6000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "diagnosis_selected": "Hyperglycemic crisis",
+      "treatment_selected": "IV fluids and insulin"
+    }

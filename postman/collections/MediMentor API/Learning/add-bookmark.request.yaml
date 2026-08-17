@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Add Bookmark'
+method: POST
+url: '{{baseUrl}}/api/learning/lessons/{{lessonId}}/bookmark'
+order: 13000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

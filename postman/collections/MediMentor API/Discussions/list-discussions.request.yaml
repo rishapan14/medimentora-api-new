@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'List Discussions'
+method: GET
+url: '{{baseUrl}}/api/discussions'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+queryParams:
+  - key: speciality
+    value: Cardiology
+    description: 'Filter by speciality (optional)'
+    disabled: true
+  - key: search
+    value: 'chest pain'
+    description: 'Full-text search across title and content (optional)'
+    disabled: true

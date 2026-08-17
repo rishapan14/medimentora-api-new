@@ -1,0 +1,23 @@
+$kind: http-request
+name: 'Create Question'
+method: POST
+url: '{{baseUrl}}/api/quizzes/{{quizId}}/questions'
+order: 6000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "question_text": "What is the normal adult resting heart rate range?",
+      "options": ["40-60 bpm", "60-100 bpm", "100-140 bpm", "140-180 bpm"],
+      "correct_answer": "60-100 bpm",
+      "explanation": "Normal resting heart rate for adults is 60-100 beats per minute.",
+      "points": 1
+    }

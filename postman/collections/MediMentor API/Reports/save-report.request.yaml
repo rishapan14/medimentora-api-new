@@ -1,0 +1,23 @@
+$kind: http-request
+name: 'Save Report Metadata'
+method: POST
+url: '{{baseUrl}}/api/reports'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Hemoglobin Panel Report",
+      "file_type": "pdf",
+      "file_path": "uploads/reports/hemoglobin_panel.pdf",
+      "extracted_text": "Hemoglobin: 10.2 g/dL (low). WBC: 12,000. Platelets: 250,000.",
+      "status": "uploaded"
+    }

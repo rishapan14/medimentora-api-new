@@ -1,0 +1,32 @@
+$kind: http-request
+name: 'Create Simulation'
+method: POST
+url: '{{baseUrl}}/api/simulations'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Diabetic Patient with Hyperglycemia",
+      "scenario": "A 62-year-old diabetic patient presents with polyuria, polydipsia, and blood glucose of 380 mg/dL.",
+      "patient_data": {
+        "age": 62,
+        "glucose": 380,
+        "history": "Type 2 Diabetes"
+      },
+      "correct_diagnosis": "Hyperglycemic crisis",
+      "correct_treatment": "IV fluids, insulin therapy, electrolyte monitoring",
+      "diagnosis_options": ["Hypoglycemia", "Hyperglycemic crisis", "DKA only", "UTI"],
+      "treatment_options": ["Oral glucose", "IV fluids and insulin", "Antibiotics only", "Observation"],
+      "difficulty": "medium",
+      "speciality": "Endocrinology",
+      "max_score": 100
+    }

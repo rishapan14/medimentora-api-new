@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Get Simulation'
+method: GET
+url: '{{baseUrl}}/api/simulations/{{simulationId}}'
+order: 2000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

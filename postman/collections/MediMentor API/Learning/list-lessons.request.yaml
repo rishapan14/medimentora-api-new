@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'List Lessons'
+method: GET
+url: '{{baseUrl}}/api/learning/courses/{{courseId}}/lessons'
+order: 6000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

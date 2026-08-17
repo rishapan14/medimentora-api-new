@@ -1,0 +1,4 @@
+$kind: collection
+name: Learning
+description: 'Learning management endpoints — /api/learning. Courses, lessons, bookmarks, completed lessons, recommendations, and weak topic detection. Create/update/delete course and lesson endpoints require admin or doctor role. All endpoints require Bearer {{accessToken}}.'
+order: 4000

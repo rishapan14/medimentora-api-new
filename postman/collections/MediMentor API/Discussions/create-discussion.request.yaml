@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'Create Discussion'
+method: POST
+url: '{{baseUrl}}/api/discussions'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Best practices for managing hyperglycemia in ICU patients",
+      "content": "I wanted to discuss the latest protocols for managing hyperglycemia in critically ill patients. What insulin regimens are you using in your units?",
+      "speciality": "Endocrinology"
+    }

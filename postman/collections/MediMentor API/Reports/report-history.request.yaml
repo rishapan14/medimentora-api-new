@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Report History'
+method: GET
+url: '{{baseUrl}}/api/reports/history'
+order: 5000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

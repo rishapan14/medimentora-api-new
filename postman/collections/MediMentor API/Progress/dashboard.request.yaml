@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Progress Dashboard'
+method: GET
+url: '{{baseUrl}}/api/progress/dashboard'
+order: 2000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

@@ -1,0 +1,27 @@
+$kind: http-request
+name: 'List Clinical Cases'
+method: GET
+url: '{{baseUrl}}/api/clinical-cases'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+queryParams:
+  - key: speciality
+    value: Cardiology
+    description: 'Filter by speciality (optional)'
+    disabled: true
+  - key: difficulty
+    value: medium
+    description: 'Filter by difficulty: easy, medium, hard (optional)'
+    disabled: true
+  - key: disease
+    value: 'Acute Coronary Syndrome'
+    description: 'Filter by disease name (partial match, optional)'
+    disabled: true
+  - key: search
+    value: 'chest pain'
+    description: 'Full-text search across title, disease, description (optional)'
+    disabled: true

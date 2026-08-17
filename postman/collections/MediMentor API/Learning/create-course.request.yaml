@@ -1,0 +1,24 @@
+$kind: http-request
+name: 'Create Course'
+method: POST
+url: '{{baseUrl}}/api/learning/courses'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Advanced Cardiac Nursing",
+      "description": "In-depth study of cardiac conditions and nursing interventions.",
+      "speciality": "Cardiology",
+      "difficulty": "hard",
+      "duration_hours": 20,
+      "is_published": true
+    }

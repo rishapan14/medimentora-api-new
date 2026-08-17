@@ -1,0 +1,247 @@
+"""Routes for AI Medical Teacher — Modules 1–2."""
+
+from flask import Blueprint
+from flask_jwt_extended import jwt_required
+
+from app.controllers import medical_teacher_controller as ctrl
+
+medical_teacher_bp = Blueprint("medical_teacher", __name__, url_prefix="/api/medical-teacher")
+
+# Module 1 — Document Processing
+medical_teacher_bp.add_url_rule(
+  "/books/upload",
+  view_func=jwt_required()(ctrl.upload_books),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/upload-and-extract",
+  view_func=jwt_required()(ctrl.upload_and_extract),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/upload-and-process",
+  view_func=jwt_required()(ctrl.upload_and_process),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/jobs",
+  view_func=jwt_required()(ctrl.list_processing_jobs),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/jobs/<string:job_id>",
+  view_func=jwt_required()(ctrl.get_processing_job),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/jobs/<string:job_id>/retry",
+  view_func=jwt_required()(ctrl.retry_processing_job),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books",
+  view_func=jwt_required()(ctrl.list_books),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>",
+  view_func=jwt_required()(ctrl.get_book),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/extract",
+  view_func=jwt_required()(ctrl.extract_book),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/detect-structure",
+  view_func=jwt_required()(ctrl.detect_book_structure),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/structure",
+  view_func=jwt_required()(ctrl.get_book_structure),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/generate-course",
+  view_func=jwt_required()(ctrl.generate_book_course),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/course",
+  view_func=jwt_required()(ctrl.get_book_course),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/generate-lessons",
+  view_func=jwt_required()(ctrl.generate_book_lessons),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/lessons",
+  view_func=jwt_required()(ctrl.list_book_lessons),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/index",
+  view_func=jwt_required()(ctrl.index_book),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/index",
+  view_func=jwt_required()(ctrl.get_book_index),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/search",
+  view_func=jwt_required()(ctrl.search_book),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/tutor/configuration",
+  view_func=jwt_required()(ctrl.get_tutor_configuration),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/tutor/sessions",
+  view_func=jwt_required()(ctrl.create_tutor_session),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/tutor/sessions",
+  view_func=jwt_required()(ctrl.list_tutor_sessions),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/tutor/sessions/<string:session_id>",
+  view_func=jwt_required()(ctrl.get_tutor_session),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/tutor/sessions/<string:session_id>/messages",
+  view_func=jwt_required()(ctrl.ask_tutor),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/teach-me/configuration",
+  view_func=jwt_required()(ctrl.get_teach_me_configuration),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/teach-me/sessions",
+  view_func=jwt_required()(ctrl.create_teach_me_session),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/teach-me/sessions",
+  view_func=jwt_required()(ctrl.list_teach_me_sessions),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/teach-me/sessions/<string:session_id>",
+  view_func=jwt_required()(ctrl.get_teach_me_session),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/teach-me/sessions/<string:session_id>/advance",
+  view_func=jwt_required()(ctrl.advance_teach_me_session),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/teach-me/sessions/<string:session_id>/answer",
+  view_func=jwt_required()(ctrl.answer_teach_me_session),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/adaptive-learning",
+  view_func=jwt_required()(ctrl.get_book_adaptive_learning),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/adaptive-learning/refresh",
+  view_func=jwt_required()(ctrl.refresh_book_adaptive_learning),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/generate-questions",
+  view_func=jwt_required()(ctrl.generate_book_questions),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/questions",
+  view_func=jwt_required()(ctrl.list_book_questions),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/questions/<int:question_id>/answer",
+  view_func=jwt_required()(ctrl.get_book_question_answer),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/quiz-configuration",
+  view_func=jwt_required()(ctrl.get_book_quiz_configuration),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/generate-quiz",
+  view_func=jwt_required()(ctrl.generate_book_quiz),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/quizzes",
+  view_func=jwt_required()(ctrl.list_book_quizzes),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/quizzes/<int:quiz_id>",
+  view_func=jwt_required()(ctrl.get_book_quiz),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/quizzes/<int:quiz_id>/submit",
+  view_func=jwt_required()(ctrl.submit_book_quiz),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/quiz-attempts",
+  view_func=jwt_required()(ctrl.list_book_quiz_attempts),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/generate-flashcards",
+  view_func=jwt_required()(ctrl.generate_book_flashcards),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/flashcards",
+  view_func=jwt_required()(ctrl.list_book_flashcards),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/flashcards/<int:card_id>/review",
+  view_func=jwt_required()(ctrl.review_book_flashcard),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>",
+  view_func=jwt_required()(ctrl.delete_book),
+  methods=["DELETE"],
+)
+
+# Module 2 — Book Parser
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/parse",
+  view_func=jwt_required()(ctrl.parse_book),
+  methods=["POST"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/chapters",
+  view_func=jwt_required()(ctrl.list_chapters),
+  methods=["GET"],
+)
+medical_teacher_bp.add_url_rule(
+  "/books/<int:book_id>/chapters/<int:chapter_id>",
+  view_func=jwt_required()(ctrl.get_chapter),
+  methods=["GET"],
+)

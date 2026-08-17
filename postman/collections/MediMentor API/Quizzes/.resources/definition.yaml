@@ -1,0 +1,4 @@
+$kind: collection
+name: Quizzes
+description: 'Quiz endpoints — /api/quizzes. List, retrieve, create, update, delete quizzes; manage questions; submit quiz answers; view results and leaderboard. Create/update/delete quiz and question management require admin or doctor role. All endpoints require Bearer {{accessToken}}.'
+order: 7000

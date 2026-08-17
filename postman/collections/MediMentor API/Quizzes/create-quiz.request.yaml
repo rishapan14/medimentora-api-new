@@ -1,0 +1,23 @@
+$kind: http-request
+name: 'Create Quiz'
+method: POST
+url: '{{baseUrl}}/api/quizzes'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Nursing Fundamentals Quiz",
+      "description": "Test your basic nursing knowledge.",
+      "difficulty": "easy",
+      "speciality": "Nursing",
+      "time_limit_minutes": 30
+    }

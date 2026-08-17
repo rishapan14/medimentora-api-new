@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'List Certificates'
+method: GET
+url: '{{baseUrl}}/api/certificates'
+order: 2000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

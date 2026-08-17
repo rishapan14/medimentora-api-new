@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Simulation Attempt History'
+method: GET
+url: '{{baseUrl}}/api/simulations/history'
+order: 7000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

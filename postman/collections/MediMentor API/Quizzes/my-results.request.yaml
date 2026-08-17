@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'My Quiz Results'
+method: GET
+url: '{{baseUrl}}/api/quizzes/results'
+order: 10000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

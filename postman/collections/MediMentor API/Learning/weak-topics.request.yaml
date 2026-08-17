@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Weak Topics'
+method: GET
+url: '{{baseUrl}}/api/learning/weak-topics'
+order: 16000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

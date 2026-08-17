@@ -1,0 +1,4 @@
+$kind: collection
+name: Certificates
+description: 'Certificate endpoints — /api/certificates. Generate PDF certificates for completed courses, list certificates, retrieve a specific certificate, and download the PDF. All endpoints require Bearer {{accessToken}}.'
+order: 9000

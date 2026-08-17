@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'Analyze by Report ID'
+method: POST
+url: '{{baseUrl}}/api/analysis'
+order: 2000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "report_id": {{reportId}}
+    }

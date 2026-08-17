@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Delete Simulation'
+method: DELETE
+url: '{{baseUrl}}/api/simulations/{{simulationId}}'
+order: 5000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

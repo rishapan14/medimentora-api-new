@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'List Simulations'
+method: GET
+url: '{{baseUrl}}/api/simulations'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+queryParams:
+  - key: speciality
+    value: Endocrinology
+    description: 'Filter by speciality (optional)'
+    disabled: true
+  - key: difficulty
+    value: medium
+    description: 'Filter by difficulty: easy, medium, hard (optional)'
+    disabled: true

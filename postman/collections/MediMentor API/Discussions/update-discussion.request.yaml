@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'Update Discussion'
+method: PUT
+url: '{{baseUrl}}/api/discussions/{{discussionId}}'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Best practices for managing hyperglycemia in ICU patients (Updated)",
+      "content": "Updated discussion with new references to the 2024 ADA guidelines."
+    }

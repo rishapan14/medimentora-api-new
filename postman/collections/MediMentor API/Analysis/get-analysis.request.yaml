@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Get Analysis'
+method: GET
+url: '{{baseUrl}}/api/analysis/{{analysisId}}'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

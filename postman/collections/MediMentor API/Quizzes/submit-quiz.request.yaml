@@ -1,0 +1,22 @@
+$kind: http-request
+name: 'Submit Quiz'
+method: POST
+url: '{{baseUrl}}/api/quizzes/{{quizId}}/submit'
+order: 9000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "answers": {
+        "1": "60-100 bpm",
+        "2": "Blood Pressure"
+      }
+    }

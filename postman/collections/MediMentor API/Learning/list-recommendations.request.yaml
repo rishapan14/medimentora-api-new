@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'List Recommendations'
+method: GET
+url: '{{baseUrl}}/api/learning/recommendations'
+order: 15000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

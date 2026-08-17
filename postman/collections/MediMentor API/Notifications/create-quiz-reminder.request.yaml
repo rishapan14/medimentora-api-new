@@ -1,0 +1,19 @@
+$kind: http-request
+name: 'Create Quiz Reminder'
+method: POST
+url: '{{baseUrl}}/api/notifications/quiz-reminder'
+order: 6000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "quiz_title": "Nursing Fundamentals Quiz"
+    }

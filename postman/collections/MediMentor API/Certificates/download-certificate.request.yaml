@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Download Certificate PDF'
+method: GET
+url: '{{baseUrl}}/api/certificates/{{certificateId}}/download'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

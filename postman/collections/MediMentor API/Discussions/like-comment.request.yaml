@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Like Comment'
+method: POST
+url: '{{baseUrl}}/api/discussions/comments/{{commentId}}/like'
+order: 10000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

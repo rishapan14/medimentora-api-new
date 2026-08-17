@@ -1,0 +1,20 @@
+$kind: collection
+name: MediMentor API
+description: |-
+  AI-Powered Clinical Report Analysis & Nursing Assistance Platform.
+
+  Base URL: {{baseUrl}}
+
+  ## Authentication
+  Protected routes require: Authorization: Bearer {{accessToken}}
+
+  ## Demo Accounts (after seeding)
+  - admin@clinical.com / admin123 (admin)
+  - doctor@clinical.com / doctor123 (doctor)
+  - nurse@clinical.com / nurse123 (nurse)
+  - student@clinical.com / student123 (medical_student)
+
+  ## Response Format
+  All endpoints return: { "status": "success|error", "message": "...", "data": {} }
+variables:
+  baseUrl: http://127.0.0.1:5000

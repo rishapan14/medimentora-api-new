@@ -1,0 +1,17 @@
+$kind: http-request
+name: Register
+method: POST
+url: '{{baseUrl}}/api/auth/register'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "newuser@clinical.com",
+      "password": "secret123",
+      "full_name": "Jane Doe",
+      "role": "medical_student"
+    }

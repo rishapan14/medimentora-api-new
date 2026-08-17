@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Mark Notification as Read'
+method: PUT
+url: '{{baseUrl}}/api/notifications/{{notificationId}}/read'
+order: 2000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

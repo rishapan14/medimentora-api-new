@@ -1,0 +1,4 @@
+$kind: collection
+name: Auth
+description: Authentication endpoints — /api/auth. Register, login, token refresh, password reset, and profile management. Login and Register do not require auth. Refresh uses the refreshToken. All other protected endpoints use Bearer {{accessToken}}.
+order: 1000

@@ -1,0 +1,10 @@
+$kind: http-request
+name: 'Get Learning Progress'
+method: GET
+url: '{{baseUrl}}/api/progress'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'

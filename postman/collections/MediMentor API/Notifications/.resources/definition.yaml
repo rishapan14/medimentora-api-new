@@ -1,0 +1,4 @@
+$kind: collection
+name: Notifications
+description: 'Notification endpoints — /api/notifications. List notifications (with optional unread filter), mark individual or all as read, delete, create learning/quiz reminders, and create custom notifications (admin only). All endpoints require Bearer {{accessToken}}.'
+order: 11000
