@@ -1,0 +1,5 @@
+import { Router } from 'express'; import * as ctrl from '../controllers/adminController.js'; import { adminRequired } from '../middleware/auth.js'; import { asyncHandler } from '../utils/asyncHandler.js';
+const a = (fn) => asyncHandler(fn); export const adminRouter = Router(); adminRouter.use(adminRequired);
+adminRouter.get('/users', a(ctrl.users)); adminRouter.get('/users/:user_id', a(ctrl.user)); adminRouter.route('/users/:user_id/role').patch(a(ctrl.role)).put(a(ctrl.role)); adminRouter.route('/users/:user_id/status').post(a(ctrl.status)).patch(a(ctrl.status));
+adminRouter.route('/settings').get(a(ctrl.getSettings)).put(a(ctrl.updateSettings)).patch(a(ctrl.updateSettings)); adminRouter.post('/settings/reset', a(ctrl.resetSettings)); adminRouter.get('/reports/overview', a(ctrl.overview));
+adminRouter.route('/:resource').get(a(ctrl.resource)).post(a(ctrl.resource)); adminRouter.route('/:resource/:id').get(a(ctrl.resource)).put(a(ctrl.resource)).patch(a(ctrl.resource)).delete(a(ctrl.resource));

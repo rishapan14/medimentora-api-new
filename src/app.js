@@ -7,6 +7,8 @@ import { databaseReady } from './config/database.js';
 import { authRouter } from './routes/auth.js';
 import { certificateRouter, clinicalCaseRouter, discussionRouter, learningRouter, notificationRouter, progressRouter, quizRouter, simulationRouter } from './routes/domain.js';
 import { analysisRouter, reportRouter, xrayRouter } from './routes/media.js';
+import { adminRouter } from './routes/admin.js';
+import { docsRouter, platformRouter } from './routes/platform.js';
 import { failure } from './utils/response.js';
 
 export function createApp() {
@@ -23,6 +25,7 @@ export function createApp() {
   app.use('/api/clinical-cases', clinicalCaseRouter); app.use('/api/discussions', discussionRouter); app.use('/api/notifications', notificationRouter);
   app.use('/api/progress', progressRouter); app.use('/api/certificates', certificateRouter);
   app.use('/api/reports', reportRouter); app.use('/api/analysis', analysisRouter); app.use('/api/xray', xrayRouter);
+  app.use('/api/admin', adminRouter); app.use('/api/platform', platformRouter); app.use(docsRouter);
   app.use((_req, res) => failure(res, 'Resource not found.', 404));
   app.use((error, _req, res, _next) => { console.error(error); if (error.name === 'ValidationError') return failure(res, 'Validation failed.', 400); if (error.code === 11000) return failure(res, 'Duplicate data.', 409); return failure(res, config.debug ? error.message : 'An internal server error occurred.', error.status || 500); });
   return app;
