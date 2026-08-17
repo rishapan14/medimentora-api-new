@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import * as controller from '../controllers/mediaController.js';
+import { authenticate } from '../middleware/auth.js';
+import { reportUpload, xrayUpload } from '../middleware/upload.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
+const a = (fn) => asyncHandler(fn);
+export const reportRouter = Router(); reportRouter.use(authenticate());
+reportRouter.post('/upload', reportUpload.array('files', 20), a(controller.uploadReports)); reportRouter.post('/upload/pdf', reportUpload.single('file'), a(controller.uploadReports)); reportRouter.post('/upload/image', reportUpload.single('file'), a(controller.uploadReports));
+reportRouter.route('/').get(a(controller.listReports)).post(a(controller.saveReport)); reportRouter.get('/history', a(controller.listReports)); reportRouter.route('/:report_id').get(a(controller.getReport)).delete(a(controller.removeReport)); reportRouter.post('/:report_id/extract', a(controller.extractReport));
+export const analysisRouter = Router(); analysisRouter.use(authenticate()); analysisRouter.route('/').get(a(controller.listAnalyses)).post(a(controller.analyzeReport)); analysisRouter.route('/:analysis_id').get(a(controller.getAnalysis)).delete(a(controller.removeAnalysis));
+export const xrayRouter = Router(); xrayRouter.use(authenticate()); xrayRouter.post('/upload', xrayUpload.array('files', 20), a(controller.uploadXrays)); xrayRouter.get('/history', a(controller.listXrays)); xrayRouter.get('/dashboard', a(controller.xrayDashboard)); xrayRouter.route('/:xray_id').get(a(controller.getXray)).delete(a(controller.removeXray)); xrayRouter.get('/:xray_id/file', a(controller.sendXray));

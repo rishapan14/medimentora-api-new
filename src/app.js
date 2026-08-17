@@ -6,10 +6,13 @@ import { config } from './config/env.js';
 import { databaseReady } from './config/database.js';
 import { authRouter } from './routes/auth.js';
 import { certificateRouter, clinicalCaseRouter, discussionRouter, learningRouter, notificationRouter, progressRouter, quizRouter, simulationRouter } from './routes/domain.js';
+import { analysisRouter, reportRouter, xrayRouter } from './routes/media.js';
 import { failure } from './utils/response.js';
 
 export function createApp() {
-  const app = express(); fs.mkdirSync(config.uploadRoot, { recursive: true }); app.disable('x-powered-by');
+  const app = express();
+  for (const folder of ['', 'reports', 'xrays', 'certificates', 'medical_teacher/books']) fs.mkdirSync(`${config.uploadRoot}/${folder}`, { recursive: true });
+  app.disable('x-powered-by');
   app.use(cors({ origin: config.corsOrigins, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], allowedHeaders: ['Authorization', 'Content-Type', 'Accept'], exposedHeaders: ['Content-Disposition'], maxAge: 600 }));
   app.use(express.json({ limit: process.env.MAX_CONTENT_LENGTH || '102mb' })); app.use(express.urlencoded({ extended: true }));
   app.get('/', (_req, res) => res.json({ status: 'success', message: 'AI-Powered Clinical Report Analysis & Nursing Assistance Platform API', data: { version: '1.0.0', docs: { xray_swagger_ui: '/apidocs', xray_openapi: '/apispec/xray.yaml', xray_openapi_meta: '/apispec/xray' }, modules: { auth: '/api/auth', reports: '/api/reports', analysis: '/api/analysis', learning: '/api/learning', medical_teacher: '/api/medical-teacher', xray: '/api/xray', clinical_cases: '/api/clinical-cases', simulations: '/api/simulations', quizzes: '/api/quizzes', progress: '/api/progress', certificates: '/api/certificates', discussions: '/api/discussions', notifications: '/api/notifications' } } }));
@@ -19,6 +22,7 @@ export function createApp() {
   app.use('/api/learning', learningRouter); app.use('/api/quizzes', quizRouter); app.use('/api/simulations', simulationRouter);
   app.use('/api/clinical-cases', clinicalCaseRouter); app.use('/api/discussions', discussionRouter); app.use('/api/notifications', notificationRouter);
   app.use('/api/progress', progressRouter); app.use('/api/certificates', certificateRouter);
+  app.use('/api/reports', reportRouter); app.use('/api/analysis', analysisRouter); app.use('/api/xray', xrayRouter);
   app.use((_req, res) => failure(res, 'Resource not found.', 404));
   app.use((error, _req, res, _next) => { console.error(error); if (error.name === 'ValidationError') return failure(res, 'Validation failed.', 400); if (error.code === 11000) return failure(res, 'Duplicate data.', 409); return failure(res, config.debug ? error.message : 'An internal server error occurred.', error.status || 500); });
   return app;
